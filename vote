@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+public class Election {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Candidates
+        String[] candidates = {"Candidate 1", "Candidate 2", "Candidate 3", "Candidate 4"};
+        int[] votes = new int[candidates.length];
+
+        int totalVoters = 0;
+
+        System.out.println("Welcome to the Election!");
+
+        while (true) {
+            System.out.println("\nPlease vote by entering the candidate number (1-4).");
+            System.out.println("Enter 0 to finish voting.");
+
+            System.out.print("Your vote: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 0) {
+                break; // End voting
+            } else if (choice >= 1 && choice <= candidates.length) {
+                votes[choice - 1]++;
+                totalVoters++;
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+        // Display results
+        System.out.println("\nElection Results:");
+        for (int i = 0; i < candidates.length; i++) {
+            System.out.println(candidates[i] + ": " + votes[i] + " votes");
+        }
+
+        // Determine the winner
+        int maxVotes = -1;
+        int winnerIndex = -1;
+        boolean tie = false;
+
+        for (int i = 0; i < votes.length; i++) {
+            if (votes[i] > maxVotes) {
+                maxVotes = votes[i];
+                winnerIndex = i;
+                tie = false;
+            } else if (votes[i] == maxVotes) {
+                tie = true;
+            }
+        }
+
+        if (tie) {
+            System.out.println("It's a tie!");
+        } else {
+            System.out.println("The winner is: " + candidates[winnerIndex]);
+        }
+
+        scanner.close();
+    }
+}
